@@ -1,0 +1,13 @@
+diff --git a/lib/vitePlugin.js b/lib/vitePlugin.js
+index bc629b470ce6c37a5022502964e8e9825ab2766d..4302333dfd1c7560577f3f7c05422fd4b026a9bb 100644
+--- a/lib/vitePlugin.js
++++ b/lib/vitePlugin.js
+@@ -240,7 +240,7 @@ function vitePlugin(registerSource, templateDir, buildInfo, importInfos, depsCol
+ function collectViteModuleDependencies(context, id, deps) {
+   if (!import_path.default.isAbsolute(id))
+     return;
+-  const normalizedId = import_path.default.normalize(id);
++  const normalizedId = import_path.default.normalize(id).split(/\?|#/)[0];
+   if (deps.has(normalizedId))
+     return;
+   deps.add(normalizedId);

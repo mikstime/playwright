@@ -1,0 +1,82 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test-current:
+    name: Test Current
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install dependencies
+        working-directory: ./current
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        working-directory: ./current
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: ./current
+        run: pnpm run test-ct
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-current
+          path: current/playwright-report/
+          retention-days: 30
+
+  test-patched:
+    name: Test Patched
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install dependencies
+        working-directory: ./patched
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        working-directory: ./patched
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: ./patched
+        run: pnpm run test-ct
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-patched
+          path: patched/playwright-report/
+          retention-days: 30
