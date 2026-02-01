@@ -1,0 +1,22 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "RnD",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test-ct": "playwright test -c playwright.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/experimental-ct-react": "1.58.1",
+    "@types/node": "25.1.0",
+    "@types/react": "19.2.10"
+  },
+  "dependencies": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}
